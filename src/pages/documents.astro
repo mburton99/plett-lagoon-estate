@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getDocuments } from '../lib/documents';
+
+const documents = getDocuments();
+---
+
+<Layout title="Documents" description="Download the estate rules, building rules and architectural guidelines.">
+  <h1 class="py-16 text-4xl font-light">Documents</h1>
+  <p class="max-w-xl text-black/70">
+    Download the current rules and guidelines. Each file shows when it was last updated.
+  </p>
+
+  <ul class="mt-12 divide-y divide-black/10 border-y border-black/10">
+    {
+      documents.map((doc) => (
+        <li class="flex flex-wrap items-center justify-between gap-4 py-6">
+          <div>
+            <h2 class="text-xl font-medium">{doc.title}</h2>
+            <p class="mt-1 text-sm text-black/60">{doc.description}</p>
+            <p class="mt-1 text-sm text-black/60">
+              PDF · {doc.sizeLabel} · Updated {doc.updatedLabel}
+            </p>
+          </div>
+          <a
+            href={doc.url}
+            download
+            class="rounded-full border border-black px-5 py-2.5 text-sm font-medium hover:bg-black hover:text-white"
+          >
+            Download
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

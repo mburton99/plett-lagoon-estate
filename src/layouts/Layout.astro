@@ -1,0 +1,54 @@
+---
+// The shared page frame: header, navigation and footer. Every page wraps its content in this.
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Plett Lagoon Estate, Plettenberg Bay.' } = Astro.props;
+
+const nav = [
+  { href: '/', label: 'Home' },
+  { href: '/estate', label: 'The Estate' },
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/developers', label: 'Developers' },
+  { href: '/documents', label: 'Documents' },
+];
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title} | Plett Lagoon Estate</title>
+  </head>
+  <body class="font-sans antialiased">
+    <header class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-6">
+      <a href="/" class="text-sm font-medium tracking-[0.25em] uppercase">Plett Lagoon Estate</a>
+      <nav aria-label="Main" class="flex flex-wrap gap-6 text-sm">
+        {
+          nav.map((item) => (
+            <a
+              href={item.href}
+              aria-current={path === item.href ? 'page' : undefined}
+              class="hover:underline aria-[current=page]:underline underline-offset-4"
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+    </header>
+    <main class="mx-auto max-w-6xl px-5 pb-24">
+      <slot />
+    </main>
+    <footer class="mx-auto max-w-6xl border-t border-black/10 px-5 py-8 text-sm text-black/60">
+      © {new Date().getFullYear()} Plett Lagoon Estate. Plettenberg Bay, Western Cape.
+    </footer>
+  </body>
+</html>
