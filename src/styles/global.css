@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+/* Placeholder styling only. The real look is decided after design review. */
+@theme {
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --color-ink: #121212;
+  --color-paper: #fbfaf7;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
