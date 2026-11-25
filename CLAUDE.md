@@ -14,6 +14,8 @@ Informational website for Plett Lagoon Estate, Plettenberg Bay. Static site: no 
 - `src/pages/` one file per page (index, estate, gallery, developers, documents).
 - `src/layouts/Layout.astro` shared header, navigation and footer.
 - `src/assets/gallery/` gallery photos (processed by Astro into web sizes at build time).
+- `src/data/gallery.json` order, alt text and captions for the gallery. `src/lib/gallery.ts` validates it at build time (every photo listed, alt text required). `src/components/Gallery.astro` is the grid and lightbox.
+- `scripts/optimise-images.mjs` (`npm run optimise -- <folder>`) turns originals into the 2,400 px web copies and adds gallery.json entries.
 - `src/assets/` hero images, renders, logos.
 - `public/documents/` downloadable PDFs, served as-is at `/documents/<file>`.
 - `src/data/documents.json` list shown on the Documents page. `src/lib/documents.ts` validates it at build time.

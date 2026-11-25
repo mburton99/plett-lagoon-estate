@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "optimise": "node scripts/optimise-images.mjs"
   },
   "private": true,
   "type": "module",
@@ -18,6 +19,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
     "@types/node": "^26.6.6",
+    "sharp": "^0.35.5",
     "typescript": "^6.0.3",
     "wrangler": "^4.164.0"
   }

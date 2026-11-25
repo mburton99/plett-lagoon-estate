@@ -6,19 +6,27 @@ You never upload files to the web host by hand. You change files in this project
 | What | Where |
 |---|---|
 | Gallery photos | `src/assets/gallery/` |
+| The gallery list (order, descriptions, captions) | `src/data/gallery.json` |
 | Other images (hero, renders, logos) | `src/assets/` |
 | Downloadable PDFs | `public/documents/` |
 | The list shown on the Documents page | `src/data/documents.json` |
 | Full-resolution originals (backup) | Google Drive, `Originals/` |
 
-## Add a photo
-1. Keep the original in Google Drive under `Originals/`.
-2. Make a web copy: JPEG, about 2,400 px on the long edge, under about 1.5 MB. Name it in lowercase with hyphens, for example `lagoon-sunrise-01.jpg`. (Claude Code can do this for you.)
-3. Put the web copy in `src/assets/gallery/`.
-4. Commit and push.
+## Add photos
+1. Keep the originals in Google Drive under `Originals/`. Copy them to a temporary folder on your computer (outside this project).
+2. Make the web copies: `npm run optimise -- "path/to/that/folder"`. It resizes to 2,400 px on the long edge, converts to JPEG, keeps each file under about 1.5 MB, strips hidden data such as GPS location, and puts the copies in `src/assets/gallery/`. It never touches your originals. Photos that are too small are flagged `LOW-RES`; use a bigger original if you have one.
+3. Open `src/data/gallery.json`. The command added an entry for each new photo with an empty `"alt"`. Write a short description of what the photo shows (for people using screen readers). Optionally add `"caption": "..."`.
+4. The order of the entries in that file is the order on the page. Move an entry up or down to move the photo.
+5. For an architect's render, add `"impression": true` so it is labelled "Architect's impression".
+6. Run `npm run dev`, look at `/gallery`, then commit and push.
+
+Example entry:
+```
+{ "file": "lagoon-sunrise-01.jpg", "alt": "Sunrise over the lagoon from the north bank.", "caption": "Sunrise from the north bank" }
+```
 
 ## Remove a photo
-Delete the file from `src/assets/gallery/`, then commit and push. The original stays safe in Drive.
+Delete the file from `src/assets/gallery/` **and** its entry from `src/data/gallery.json`, then commit and push. The original stays safe in Drive.
 
 ## Add a new document
 1. Put the PDF in `public/documents/`.
@@ -44,7 +52,7 @@ The `updated` date is written `2026-12-31`. If only the month is known, write `2
 Delete its entry from `documents.json` and delete the PDF, then commit and push.
 
 ## If the build fails
-The error message says what is wrong, for example a file name in `documents.json` that does not match a PDF, or a date that is not written like 2026-12-31. Fix it and push again. The live site stays unchanged until a build succeeds.
+The error message says what is wrong, for example a file name in `documents.json` that does not match a PDF, or a date that is not written like 2026-12-31, or a gallery photo with no description or no entry in `gallery.json`. Fix it and push again. The live site stays unchanged until a build succeeds.
 
 ## Check before you push
 ```
