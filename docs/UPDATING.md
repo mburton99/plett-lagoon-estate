@@ -33,6 +33,8 @@ Delete the file from `src/assets/gallery/`, then commit and push. The original s
    ```
 3. Commit and push.
 
+The `updated` date is written `2026-12-31`. If only the month is known, write `2026-12` and the site shows "December 2026". The date appears under the Download button, not in the title.
+
 ## Replace a document
 1. Overwrite the PDF in `public/documents/` using the same file name.
 2. Change the `updated` date in `documents.json` to today.

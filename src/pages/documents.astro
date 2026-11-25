@@ -5,10 +5,10 @@ import { getDocuments } from '../lib/documents';
 const documents = getDocuments();
 ---
 
-<Layout title="Documents" description="Download the estate rules, building rules and architectural guidelines.">
+<Layout title="Documents" description="Download the estate rules, building rules and plots masterplan.">
   <h1 class="py-16 text-4xl font-light">Documents</h1>
   <p class="max-w-xl text-black/70">
-    Download the current rules and guidelines. Each file shows when it was last updated.
+    Download the current rules and plans. The date under each download shows when the document was last updated.
   </p>
 
   <ul class="mt-12 divide-y divide-black/10 border-y border-black/10">
@@ -18,17 +18,19 @@ const documents = getDocuments();
           <div>
             <h2 class="text-xl font-medium">{doc.title}</h2>
             <p class="mt-1 text-sm text-black/60">{doc.description}</p>
-            <p class="mt-1 text-sm text-black/60">
-              PDF · {doc.sizeLabel} · Updated {doc.updatedLabel}
+          </div>
+          <div class="flex flex-col items-start gap-2 sm:items-center">
+            <a
+              href={doc.url}
+              download
+              class="rounded-full border border-black px-5 py-2.5 text-sm font-medium hover:bg-black hover:text-white"
+            >
+              Download
+            </a>
+            <p class="text-xs text-black/60">
+              Updated {doc.updatedLabel} · PDF, {doc.sizeLabel}
             </p>
           </div>
-          <a
-            href={doc.url}
-            download
-            class="rounded-full border border-black px-5 py-2.5 text-sm font-medium hover:bg-black hover:text-white"
-          >
-            Download
-          </a>
         </li>
       ))
     }
