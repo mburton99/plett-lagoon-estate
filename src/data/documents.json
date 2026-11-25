@@ -1,20 +1,20 @@
 [
   {
     "title": "Estate Rules",
-    "description": "Rules for living at Plett Lagoon Estate.",
+    "description": "Rules for homeowners, lessees and residents of the estate.",
     "file": "estate-rules.pdf",
-    "updated": "2026-11-18"
+    "updated": "2024-12-05"
   },
   {
     "title": "Building Rules",
-    "description": "Rules for builders and contractors working on the estate.",
+    "description": "Rules and regulations for new dwellings, alterations and additions.",
     "file": "building-rules.pdf",
-    "updated": "2026-11-18"
+    "updated": "2024-12-05"
   },
   {
-    "title": "Architectural Guidelines",
-    "description": "Design guidelines for every home on the estate.",
-    "file": "architectural-guidelines.pdf",
-    "updated": "2026-11-18"
+    "title": "Plots Masterplan",
+    "description": "Site masterplan showing the plots and the private nature area.",
+    "file": "plots-masterplan.pdf",
+    "updated": "2024-11"
   }
 ]

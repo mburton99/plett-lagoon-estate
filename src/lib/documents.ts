@@ -10,7 +10,7 @@ export interface SiteDocument {
   description: string;
   /** File name inside public/documents/, for example "estate-rules.pdf". */
   file: string;
-  /** Last updated date as YYYY-MM-DD. */
+  /** Last updated date as YYYY-MM-DD, or YYYY-MM when only the month is known. */
   updated: string;
 }
 
@@ -38,14 +38,24 @@ export function getDocuments(): DocumentView[] {
     if (!existsSync(path)) {
       throw new Error(`${label}: public/documents/${doc.file} does not exist. Add the PDF or fix the file name.`);
     }
-    const date = new Date(`${doc.updated}T00:00:00Z`);
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(doc.updated) || Number.isNaN(date.getTime())) {
-      throw new Error(`${label}: "updated" must be a date like 2026-12-31, got "${doc.updated}".`);
+    // Accept 2026-12-31, or 2026-12 when only the month is known.
+    const match = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(doc.updated);
+    const iso = match ? `${match[1]}-${match[2]}-${match[3] ?? '01'}` : '';
+    const date = new Date(`${iso}T00:00:00Z`);
+    // The last check rejects impossible dates such as 2026-02-31, which JavaScript would silently roll over.
+    if (!match || Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== iso) {
+      throw new Error(`${label}: "updated" must be a date like 2026-12-31 (or 2026-12 for a month), got "${doc.updated}".`);
     }
+    const updatedLabel = date.toLocaleDateString('en-ZA', {
+      day: match[3] ? 'numeric' : undefined,
+      month: 'long',
+      year: 'numeric',
+      timeZone: 'UTC',
+    });
     return {
       ...doc,
       url: `/documents/${doc.file}`,
-      updatedLabel: date.toLocaleDateString('en-ZA', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }),
+      updatedLabel,
       sizeLabel: formatSize(statSync(path).size),
     };
   });
