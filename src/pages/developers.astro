@@ -1,8 +1,46 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import hero from '../assets/hero/daytime-land-town.jpg';
+
+// Placeholders only. Real company names and contact details are not confirmed yet.
+const roles = [
+  { role: 'Developer', text: 'Plans and delivers the estate.' },
+  { role: 'Sales and enquiries', text: 'First point of contact for plots and viewings.' },
+  { role: 'Architects', text: 'Prepared the building guidelines and masterplan.' },
+];
 ---
 
-<Layout title="Developers">
-  <h1 class="py-16 text-4xl font-light">Developers</h1>
-  <p class="text-black/70">Developer details go here.</p>
+<Layout title="Developers" description="Who is behind Plett Lagoon Estate and how to contact them.">
+  <PageHero title="The people behind the estate" intro="Get in touch about plots, building or viewings." image={hero} />
+
+  <section class="band">
+    <div class="wrap">
+      <ul class="cards">
+        {
+          roles.map((r) => (
+            <li class="card">
+              <h2 class="h-md">{r.role}</h2>
+              <p class="muted" style="margin-top:8px">{r.text}</p>
+              <dl>
+                <dt>Company</dt>
+                <dd><span class="todo">[Company name]</span></dd>
+                <dt>Phone</dt>
+                <dd><span class="todo">[Phone number]</span></dd>
+                <dt>Email</dt>
+                <dd><span class="todo">[Email address]</span></dd>
+              </dl>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="band band--alt cta">
+    <div class="wrap">
+      <h2 class="h-lg">Visit the sales office</h2>
+      <p class="lede"><span class="todo">[Address and opening hours to be confirmed]</span></p>
+    </div>
+  </section>
 </Layout>

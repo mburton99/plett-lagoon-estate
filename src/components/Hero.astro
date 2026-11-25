@@ -1,0 +1,33 @@
+---
+// Full-screen cover for the home page: slow zoom on arrival, text rises in.
+import { Image } from 'astro:assets';
+import Wordmark from './Wordmark.astro';
+import one from '../assets/hero/sunset-lagoon-bush.jpg';
+import two from '../assets/hero/sunset-track-mountains.jpg';
+import three from '../assets/hero/daytime-land-lagoon-mouth.jpg';
+
+// Draft tagline: to be confirmed with the developers.
+const tagline = 'Coastal living on the edge of the lagoon';
+---
+
+<section class="hero" aria-labelledby="home-title">
+  <div class="hero__media">
+    <Image src={one} alt="" width={1088} loading="eager" fetchpriority="high" />
+    <Image src={two} alt="" width={1088} loading="lazy" data-extra />
+    <Image src={three} alt="" width={1088} loading="lazy" data-extra />
+  </div>
+  <div class="hero__shade"></div>
+  <div class="hero__inner">
+    <h1 id="home-title" class="sr-only">Plett Lagoon Estate</h1>
+    <Wordmark class="hero__wordmark rise rise--2" />
+    <div class="hero__copy">
+      <p class="hero__place rise">Plettenberg Bay</p>
+      <p class="hero__headline rise rise--3">{tagline}</p>
+      <div class="hero__cta rise rise--4">
+        <a class="btn" href="/gallery">View the gallery</a>
+        <a class="btn btn--ghost" href="/developers">Contact the developers</a>
+      </div>
+    </div>
+  </div>
+  <a class="hero__scroll" href="#intro" aria-label="Scroll to the introduction"></a>
+</section>

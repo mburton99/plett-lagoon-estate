@@ -14,7 +14,7 @@ const large = await Promise.all(
 
 {
   items.length === 0 ? (
-    <p class="text-black/70">Photos coming soon.</p>
+    <p class="muted">Photos coming soon.</p>
   ) : (
     <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((item, i) => (
@@ -26,7 +26,7 @@ const large = await Promise.all(
               data-alt={item.alt}
               data-caption={item.caption ?? ''}
               data-impression={item.impression ? 'true' : 'false'}
-              class="relative block overflow-hidden bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2"
+              class="relative block overflow-hidden media-bg focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               <Picture
                 src={item.image}
@@ -37,7 +37,7 @@ const large = await Promise.all(
                 fallbackFormat="jpg"
                 loading="lazy"
                 decoding="async"
-                class="block aspect-[3/2] w-full object-cover"
+                class="gallery-img block aspect-[3/2] w-full object-cover"
               />
               {item.impression && (
                 <span class="absolute bottom-2 left-2 rounded bg-black/65 px-2 py-1 text-xs text-white">
@@ -45,7 +45,7 @@ const large = await Promise.all(
                 </span>
               )}
             </a>
-            {item.caption && <figcaption class="mt-2 text-sm text-black/60">{item.caption}</figcaption>}
+            {item.caption && <figcaption class="mt-2 text-sm muted">{item.caption}</figcaption>}
           </figure>
         </li>
       ))}

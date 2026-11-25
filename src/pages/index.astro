@@ -1,8 +1,83 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import estateImg from '../assets/hero/sunset-grassland-houses.jpg';
+import galleryImg from '../assets/hero/daytime-land-lagoon-mouth.jpg';
+import documentsImg from '../assets/hero/sunset-track-mountains.jpg';
+import developersImg from '../assets/hero/daytime-land-town.jpg';
+import stripOne from '../assets/hero/sunset-track-houses.jpg';
+import stripTwo from '../assets/hero/daytime-land-town.jpg';
+import stripThree from '../assets/hero/sunset-lagoon-bush.jpg';
+
+// Draft copy for the design review. Nothing here is confirmed estate information.
+const tiles = [
+  { href: '/estate', title: 'The Estate', text: 'The setting, the plots and the building guidelines.', img: estateImg },
+  { href: '/gallery', title: 'Gallery', text: 'Photographs of the land and, soon, the homes.', img: galleryImg },
+  { href: '/documents', title: 'Documents', text: 'Estate rules, building rules and the plots masterplan.', img: documentsImg },
+  { href: '/developers', title: 'Developers', text: 'Who is building the estate and how to reach them.', img: developersImg },
+];
 ---
 
-<Layout title="Home">
-  <h1 class="py-16 text-4xl font-light">Plett Lagoon Estate</h1>
-  <p class="text-black/70">This website is under construction. Check back soon.</p>
+<Layout title="Home" description="Plett Lagoon Estate, a residential estate on the lagoon in Plettenberg Bay.">
+  <Hero />
+
+  <section id="intro" class="band">
+    <div class="wrap split">
+      <h2 class="h-lg">Beside the lagoon in Plettenberg Bay</h2>
+      <div class="prose">
+        <p class="lede">
+          Plett Lagoon Estate is a residential estate in Plettenberg Bay, set between the lagoon and the Garden Route coast.
+        </p>
+        <p>
+          This website brings together photographs of the land, the estate documents and the developers' contact details.
+        </p>
+        <p><span class="todo">[Final introduction to be written and approved]</span></p>
+        <p><a class="link" href="/estate">Read about the estate</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--alt">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="h-lg">Find your way around</h2>
+      </div>
+      <ul class="tiles">
+        {
+          tiles.map((t) => (
+            <li>
+              <a class="tile" href={t.href}>
+                <Image class="tile__img" src={t.img} alt="" width={720} loading="lazy" />
+                <span class="tile__title">{t.title}</span>
+                <span class="tile__text">{t.text}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="h-lg">The land today</h2>
+        <a class="link" href="/gallery">See the whole gallery</a>
+      </div>
+      <div class="strip">
+        <a href="/gallery" tabindex="-1" aria-hidden="true"><Image src={stripOne} alt="" width={640} loading="lazy" /></a>
+        <a href="/gallery" tabindex="-1" aria-hidden="true"><Image src={stripTwo} alt="" width={640} loading="lazy" /></a>
+        <a href="/gallery" tabindex="-1" aria-hidden="true"><Image src={stripThree} alt="" width={640} loading="lazy" /></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--alt cta">
+    <div class="wrap">
+      <h2 class="h-lg">Interested in the estate?</h2>
+      <p class="lede">Speak to the developers about the plots, the building process and viewings.</p>
+      <a class="btn" href="/developers">Contact the developers</a>
+    </div>
+  </section>
 </Layout>

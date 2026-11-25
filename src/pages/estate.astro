@@ -1,8 +1,57 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import hero from '../assets/hero/sunset-grassland-houses.jpg';
+import side from '../assets/hero/daytime-land-lagoon-mouth.jpg';
+import side2 from '../assets/hero/sunset-track-houses.jpg';
 ---
 
-<Layout title="The Estate">
-  <h1 class="py-16 text-4xl font-light">The Estate</h1>
-  <p class="text-black/70">Estate page content goes here.</p>
+<Layout title="The Estate" description="About Plett Lagoon Estate: the setting, the plots and the building guidelines.">
+  <PageHero title="A place by the water" intro="Plett Lagoon Estate in Plettenberg Bay." image={hero} />
+
+  <section class="band">
+    <div class="wrap split split--even">
+      <Image class="photo" src={side} alt="Aerial view of open land beside the lagoon mouth, with the sea and mountains beyond." width={900} loading="lazy" />
+      <div class="stack prose">
+        <h2 class="h-lg" style="color:var(--fg)">The setting</h2>
+        <p>
+          The estate lies beside the lagoon in Plettenberg Bay. Open land, coastal bush and views of the water and the mountains
+          shape how it will be laid out.
+        </p>
+        <p><span class="todo">[Setting and location description to be written and approved]</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--alt">
+    <div class="wrap split split--even split--flip">
+      <Image class="photo photo--arch" src={side2} alt="Aerial view of grassland crossed by a sandy track, with white houses and the lagoon at sunset." width={900} loading="lazy" />
+      <div class="stack prose">
+        <h2 class="h-lg" style="color:var(--surface-fg)">Plots and masterplan</h2>
+        <p>
+          The masterplan shows the plots and a private nature area. The current plan is available to download on the
+          Documents page.
+        </p>
+        <p><span class="todo">[Number of plots and plot sizes to be confirmed]</span></p>
+        <p><a class="link" href="/documents">Go to the documents</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap split">
+      <h2 class="h-lg">Building on the estate</h2>
+      <div class="stack prose">
+        <p class="lede">
+          Every home follows the estate's building rules, so the estate keeps a consistent character.
+        </p>
+        <p>
+          The building rules cover new dwellings, alterations and additions. Read them before you plan a home, and speak to
+          the developers if you have questions.
+        </p>
+        <p><a class="link" href="/documents">Read the building rules</a></p>
+      </div>
+    </div>
+  </section>
 </Layout>

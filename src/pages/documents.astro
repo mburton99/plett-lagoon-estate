@@ -1,38 +1,36 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
 import { getDocuments } from '../lib/documents';
+import hero from '../assets/hero/daytime-land-lagoon-mouth.jpg';
 
 const documents = getDocuments();
 ---
 
 <Layout title="Documents" description="Download the estate rules, building rules and plots masterplan.">
-  <h1 class="py-16 text-4xl font-light">Documents</h1>
-  <p class="max-w-xl text-black/70">
-    Download the current rules and plans. The date under each download shows when the document was last updated.
-  </p>
+  <PageHero title="Documents" intro="Download the current rules and plans." image={hero} />
 
-  <ul class="mt-12 divide-y divide-black/10 border-y border-black/10">
-    {
-      documents.map((doc) => (
-        <li class="flex flex-wrap items-center justify-between gap-4 py-6">
-          <div>
-            <h2 class="text-xl font-medium">{doc.title}</h2>
-            <p class="mt-1 text-sm text-black/60">{doc.description}</p>
-          </div>
-          <div class="flex flex-col items-start gap-2 sm:items-center">
-            <a
-              href={doc.url}
-              download
-              class="rounded-full border border-black px-5 py-2.5 text-sm font-medium hover:bg-black hover:text-white"
-            >
-              Download
-            </a>
-            <p class="text-xs text-black/60">
-              Updated {doc.updatedLabel} · PDF, {doc.sizeLabel}
-            </p>
-          </div>
-        </li>
-      ))
-    }
-  </ul>
+  <section class="band">
+    <div class="wrap">
+      <p class="lede" style="margin-bottom:clamp(28px,4vw,48px)">
+        The date under each download shows when the document was last updated.
+      </p>
+      <ul class="docs">
+        {
+          documents.map((doc) => (
+            <li class="doc">
+              <div>
+                <h2 class="h-md">{doc.title}</h2>
+                <p class="muted" style="margin-top:6px">{doc.description}</p>
+              </div>
+              <div class="doc__action">
+                <a href={doc.url} download class="btn">Download</a>
+                <p class="doc__meta">Updated {doc.updatedLabel} · PDF, {doc.sizeLabel}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
 </Layout>

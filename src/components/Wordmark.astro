@@ -1,0 +1,18 @@
+---
+// The Plett Lagoon Estate logo, drawn from one transparent image so it takes the surrounding text colour.
+import wordmark from '../assets/brand/wordmark.png';
+import icon from '../assets/brand/icon.png';
+
+interface Props {
+  kind?: 'wordmark' | 'icon';
+  class?: string;
+}
+const { kind = 'wordmark', class: className = '' } = Astro.props;
+const asset = kind === 'icon' ? icon : wordmark;
+---
+
+<span
+  class:list={['logo-mask', className]}
+  style={`--mask:url(${asset.src});aspect-ratio:${asset.width / asset.height}`}
+  aria-hidden="true"
+></span>

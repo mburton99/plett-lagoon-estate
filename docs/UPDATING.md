@@ -62,3 +62,6 @@ npm run check
 
 ## Launch checklist (later)
 - Search engines are currently told **not** to list the site. This is set in `public/_headers`. When the site is ready to be found on Google, delete the `/*` rule in that file (or the whole file), then commit and push.
+
+## Design concept preview (temporary)
+While the design is being chosen, every page has a small bar at the bottom to switch between five design concepts. Your choice is remembered in your browser. To share one concept, add `?concept=3` to any address. When a concept is chosen, ask Claude to remove the other four and the bar.

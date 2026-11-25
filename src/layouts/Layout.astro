@@ -1,6 +1,7 @@
 ---
-// The shared page frame: header, navigation and footer. Every page wraps its content in this.
+// The shared page frame: header, navigation, footer and the concept switcher.
 import '../styles/global.css';
+import Wordmark from '../components/Wordmark.astro';
 
 interface Props {
   title: string;
@@ -10,45 +11,144 @@ interface Props {
 const { title, description = 'Plett Lagoon Estate, Plettenberg Bay.' } = Astro.props;
 
 const nav = [
-  { href: '/', label: 'Home' },
   { href: '/estate', label: 'The Estate' },
   { href: '/gallery', label: 'Gallery' },
   { href: '/developers', label: 'Developers' },
   { href: '/documents', label: 'Documents' },
 ];
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const concepts = ['Tide', 'Off-shutter', 'Sandbank', 'Fynbos', 'Last light'];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="1">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <title>{title} | Plett Lagoon Estate</title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <title>{title === 'Home' ? 'Plett Lagoon Estate' : `${title} | Plett Lagoon Estate`}</title>
+    <!-- Concept preview: picks the design before the page paints. ?concept=3 also works. -->
+    <script is:inline>
+      (function () {
+        var n = 1;
+        try {
+          var q = new URLSearchParams(location.search).get('concept');
+          n = parseInt(q || localStorage.getItem('concept') || '1', 10);
+          if (!(n >= 1 && n <= 5)) n = 1;
+          if (q) localStorage.setItem('concept', String(n));
+        } catch (e) {}
+        document.documentElement.setAttribute('data-theme', String(n));
+      })();
+    </script>
   </head>
-  <body class="font-sans antialiased">
-    <header class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-6">
-      <a href="/" class="text-sm font-medium tracking-[0.25em] uppercase">Plett Lagoon Estate</a>
-      <nav aria-label="Main" class="flex flex-wrap gap-6 text-sm">
-        {
-          nav.map((item) => (
-            <a
-              href={item.href}
-              aria-current={path === item.href ? 'page' : undefined}
-              class="hover:underline aria-[current=page]:underline underline-offset-4"
-            >
-              {item.label}
-            </a>
-          ))
-        }
-      </nav>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <div class="site-header__bar">
+        <a class="logo" href="/" aria-label="Plett Lagoon Estate, home"><Wordmark /></a>
+        <a class="logo-icon" href="/" aria-label="Plett Lagoon Estate, home"><Wordmark kind="icon" /></a>
+        <nav id="site-nav" class="site-nav" aria-label="Main">
+          <ul>
+            <li class="nav-home"><a href="/" aria-current={path === '/' ? 'page' : undefined}>Home</a></li>
+            {
+              nav.map((item) => (
+                <li>
+                  <a href={item.href} aria-current={path === item.href ? 'page' : undefined}>
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+        <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-nav" data-menu-btn>Menu</button>
+      </div>
     </header>
-    <main class="mx-auto max-w-6xl px-5 pb-24">
+
+    <main id="main">
       <slot />
     </main>
-    <footer class="mx-auto max-w-6xl border-t border-black/10 px-5 py-8 text-sm text-black/60">
-      © {new Date().getFullYear()} Plett Lagoon Estate. Plettenberg Bay, Western Cape.
+
+    <footer class="site-footer band band--alt">
+      <div class="wrap">
+        <div class="site-footer__grid">
+          <div>
+            <Wordmark class="site-footer__brand" />
+            <p class="muted" style="margin-top:16px;max-width:30ch">Plettenberg Bay, Western Cape.</p>
+          </div>
+          <div>
+            <h2>Pages</h2>
+            <ul>
+              <li><a href="/">Home</a></li>
+              {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+            </ul>
+          </div>
+          <div>
+            <h2>Contact</h2>
+            <ul>
+              <li><span class="todo">[Phone number]</span></li>
+              <li><span class="todo">[Email address]</span></li>
+              <li><span class="todo">[Sales office address]</span></li>
+            </ul>
+          </div>
+        </div>
+        <small>© {new Date().getFullYear()} Plett Lagoon Estate. All rights reserved.</small>
+      </div>
     </footer>
+
+    <!-- Concept switcher: preview only. Delete this block once a design is chosen. -->
+    <div class="concepts" role="group" aria-label="Design concept">
+      <span class="concepts__label">Design concept</span>
+      {concepts.map((name, i) => <button type="button" data-concept={i + 1} aria-pressed={i === 0 ? 'true' : 'false'}>{i + 1} {name}</button>)}
+    </div>
+
+    <script>
+      // Concept switcher
+      const root = document.documentElement;
+      const buttons = document.querySelectorAll<HTMLButtonElement>('[data-concept]');
+      const mark = () => {
+        const current = root.getAttribute('data-theme');
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.concept === current)));
+      };
+      buttons.forEach((b) =>
+        b.addEventListener('click', () => {
+          root.setAttribute('data-theme', b.dataset.concept!);
+          try {
+            localStorage.setItem('concept', b.dataset.concept!);
+          } catch {}
+          closeMenu();
+          mark();
+        }),
+      );
+      mark();
+
+      // Header: turns solid after the first scroll
+      const header = document.querySelector<HTMLElement>('[data-header]')!;
+      const onScroll = () => header.toggleAttribute('data-scrolled', window.scrollY > 40);
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // Menu panel (phones, and concept 5 everywhere)
+      const menuBtn = document.querySelector<HTMLButtonElement>('[data-menu-btn]')!;
+      function setMenu(open: boolean) {
+        header.toggleAttribute('data-open', open);
+        root.toggleAttribute('data-menu-open', open);
+        menuBtn.setAttribute('aria-expanded', String(open));
+        menuBtn.textContent = open ? 'Close' : 'Menu';
+      }
+      function closeMenu() {
+        setMenu(false);
+      }
+      menuBtn.addEventListener('click', () => setMenu(!header.hasAttribute('data-open')));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && header.hasAttribute('data-open')) {
+          closeMenu();
+          menuBtn.focus();
+        }
+      });
+      document.querySelectorAll('#site-nav a').forEach((a) => a.addEventListener('click', closeMenu));
+    </script>
   </body>
 </html>

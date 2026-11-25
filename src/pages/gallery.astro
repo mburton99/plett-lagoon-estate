@@ -1,9 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
 import Gallery from '../components/Gallery.astro';
+import hero from '../assets/hero/sunset-track-houses.jpg';
 ---
 
 <Layout title="Gallery" description="Photographs of Plett Lagoon Estate and its surroundings.">
-  <h1 class="py-16 text-4xl font-light">Gallery</h1>
-  <Gallery />
+  <PageHero title="Gallery" intro="Photographs of the estate and its surroundings." image={hero} />
+  <section class="band">
+    <div class="wrap">
+      <Gallery />
+    </div>
+  </section>
 </Layout>
