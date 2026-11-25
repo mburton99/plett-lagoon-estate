@@ -1,0 +1,6 @@
+# Response headers for every file on the site (Cloudflare reads this file).
+#
+# NOINDEX: asks search engines not to list the site while it is unfinished.
+# AT LAUNCH: delete the "/*" rule below (or this whole file) so Google can find the site.
+/*
+  X-Robots-Tag: noindex, nofollow

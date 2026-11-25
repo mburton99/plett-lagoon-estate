@@ -51,3 +51,6 @@ The error message says what is wrong, for example a file name in `documents.json
 npm run build
 npm run check
 ```
+
+## Launch checklist (later)
+- Search engines are currently told **not** to list the site. This is set in `public/_headers`. When the site is ready to be found on Google, delete the `/*` rule in that file (or the whole file), then commit and push.
