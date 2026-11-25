@@ -26,5 +26,8 @@ Informational website for Plett Lagoon Estate, Plettenberg Bay. Static site: no 
 - Use semantic HTML, alt text on every image, and keep layouts working at phone width.
 - Work on a branch and open a pull request for anything beyond a small content change.
 
+## Search engines
+- `public/_headers` currently tells search engines not to index anything (`X-Robots-Tag: noindex`). This is deliberate while the site is unfinished. Remove the rule at launch, and only when Michael says so.
+
 ## Status
 Foundation only. Visual design is not final and all current content is placeholder.
